@@ -1,0 +1,63 @@
+body {
+    background: #333;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+}
+canvas {
+    background-color: #666;
+    padding: 0 10px 0 10px;
+}
+h1 {
+    margin: 5px;
+    font-size: 1.2em;
+}
+nav {
+}
+select {
+    width: 8%;
+    height: 20px;
+    font-size: 16px;
+}
+#fig6 {
+    background: #666;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    height: auto;
+}
+.headers {
+    height: 20px;
+    padding: 10px 0 10px 0;
+    margin-bottom: 10px;
+    background: #882222;
+}
+
+.num {
+    width: 350px;
+    margin-left: 20px;
+    margin-right: 12px;
+    font-size: 14px;
+    text-align: right;
+}
+.key {
+    width: 20px;
+    text-align: center;
+}
+.gra {
+    width: 160px;
+    text-align: center;
+    margin: 0 10px 0 10px;
+}
+.mus {
+    width: auto;
+    text-align: right;
+    margin: 0 10px 0 10px;
+}

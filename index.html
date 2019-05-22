@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"
+    <title>Rhythm: Notation System</title>
+    <link rel="stylesheet" href="./css/schillinger.css">
+</head>
+<body>
+    <header>
+        <h1>System of Musical Composition, Book 1: Rhythm</h1>
+        <nav>
+            <p>Major Generator:  "a" =
+            <select id="select-a">
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+            </p>
+            <p>Minor Generator:  "b" =
+            <select id="select-b">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+        </p>
+        </nav>
+    </header>
+    <article>
+        <div id="fig6">
+            <div class="row headers">
+                <div class="num header">Numbers</div>
+                <div class="key header">key</div>
+                <div class="gra header">Graphs</div>
+                <div class="mus header">Music</div>
+            </div>
+
+            <div class="row cd">
+                <div class="num" id="num-cd"></div>
+                <div class="key">c.d.</div>
+                <div class="gra"><canvas id="canvas-cd"></canvas></div>
+                <div class="mus">TBD</div>
+            </div>
+
+            <div class="row a">
+                <div class="num" id="num-a"></div>
+                <div class="key">a.</div>
+                <div class="gra"><canvas id="canvas-a" ></canvas></div>
+                <div class="mus">TBD</div>
+            </div>
+
+            <div class="row b">
+                <div class="num" id="num-b"></div>
+                <div class="key">b.</div>
+                <div class="gra"><canvas id="canvas-b" ></canvas></div>
+                <div class="mus">TBD</div>
+            </div>
+
+            <div class="row r">
+                <div class="num" id="num-r"></div>
+                <div class="key">r.</div>
+                <div class="gra" ><canvas id="canvas-r" ></canvas></div>
+                <div class="mus">TBD</div>
+            </div>
+
+            <div class="row cp">
+                <div class="num" id="num-cp"></div>
+                <div class="key">c.p.</div>
+                <div class="gra"><canvas id="canvas-cp"></canvas></div>
+                <div class="mus">TBD</div>
+            </div>
+        </div>
+    </article>
+<script type="text/javascript" src="./js/schillinger.js"></script>
+</body>
+</html>
