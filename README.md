@@ -3,10 +3,11 @@
 ## Book 1: Rhythm
 
  - open index.html in a web browser
- - select values for a and b to see the fractions and graph representations
+ - select a resultant from the drop-down list to see it in number and graph representations
  
  ### To Do
-   - calculate fractions for resultant
+   - calculate number-fractions for selected resultant
    - implement musical notation, perhaps with VexFlow
    
    
+

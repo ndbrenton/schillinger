@@ -1,6 +1,6 @@
 /* MODEL */
 let a = 3;  // Major Generator
-let b = 1;  // Minor Generator
+let b = 2;  // Minor Generator
 let r = 'tbd';
 let cp = (a * b);  // Common Product
 let cd = (1 / cp); // Common Denominator
@@ -11,11 +11,14 @@ let bArr = [];
 let rArr = [];
 let cpArr = [];
 
-const cw = 120; // Canvas width
-const ch = 60;  // Canvas size
+let cw = 180; // Canvas width
+let ch = 60;  // Canvas height
 let hi = ch * (1/4); // Upper limit for graph line
 let lo = ch * (3/4); // Lower limit for graph line
 let y = lo;
+
+const resultant = document.getElementById('select-r');
+const graphHeader = document.getElementById('gra-header');
 
 const num_cd = document.querySelector('#num-cd'); // cd
 const num_a = document.querySelector('#num-a'); // a
@@ -34,24 +37,28 @@ const ctxr = canvasr.getContext('2d');
 const canvascp = document.querySelector('#canvas-cp');
 const ctxcp = canvascp.getContext('2d');
 
-
-const majorGeneratorSelector = document.getElementById('select-a');
-const minorGeneratorSelector = document.getElementById('select-b');
-
-
+resultant.addEventListener('change', function() {
+    a = resultant.value.charAt(0)
+    b = resultant.value.charAt(1)
+//    bArr = [];
+    cp = (a * b);  // Common Product
+    cd = (1 / cp); // Common Denominator
+    if (cp > 15) {
+        cw = 180;
+    } else {
+        cw = 180;
+    }
+    octopus();
+})
 
 /* OCTOPUS */
 function octopus() {
-
-
-
-
-
-    console.log('calculating numbers');
-    cdArr = [];
-    aArr = [];
-    rArr = [];
-    cpArr = [];
+    console.clear();
+    console.log(`${a} % ${b}`);
+    console.log(`c.d. = ${cd}`)
+    console.log(`  a. = ${a}`)
+    console.log(`  b. = ${b}`)
+    console.log(`c.p. = ${cp}`);
 
     findcd();
     num_cd.innerHTML = cdArr.join('  +  ');
@@ -68,59 +75,44 @@ function octopus() {
 }
 octopus();
 
-majorGeneratorSelector.addEventListener('change', function() { // When a new 'a' is selected
-    a = majorGeneratorSelector.value;
-    bArr = [];
-    cp = (a * b);  // Common Product
-    cd = (1 / cp); // Common Denominator
-    octopus();
-})
-minorGeneratorSelector.addEventListener('change', function() { // When a new 'b' is selected
-    b = minorGeneratorSelector.value;  // Minor Generator
-    bArr = [];
-    cp = (a * b);  // Common Product
-    cd = (1 / cp); // Common Denominator
-    octopus();
-})
-
 
 /* VIEW */
 function findcd() {
+    cdArr = [];
     for (i = 1; i <= cp; i++) {
         cdArr.push(`<sup>1</sup>/<sub>${cp}</sub>`);
     }
-    console.log(`cd: ${cd}`)
 }
 function finda() {  // a, cp, aArr
-    if (a == cp) {  // if a is same as common product
-        aArr.push(`<sup>${a}</sup>/<sub>${cp}</sub>`);  // do only once
-        console.log('if only...');
+    aArr = [];
+    if (a == cp) {  // if a == common product, do only once
+        aArr.push(`<sup>${a}</sup>/<sub>${cp}</sub>`);  // console.log(`${b} a's: iteration: ${b}`);
     } else {
-        for (i = 0; i < 1;) {  // add a to itself for another pass
-            i = i + (a / cp);
+        for (i = 0; i < 0.999999;) {  // add a to itself for another pass
+            i = i + (a / cp); // console.log(`${b} a's: iteration: ${i}`)
             aArr.push(`<sup>${a}</sup>/<sub>${cp}</sub>`);
         }
     }
-    console.log(`a: ${a}`)
 }
 function findb() {
+    bArr = [];
     for (i = 0; i < 0.999999;) {
-        i = i + (b / cp);
+        i = i + (b / cp); // console.log(`${a} b's: iteration: ${i}`)
         bArr.push(`<sup>${b}</sup>/<sub>${cp}</sub>`);
     }
-    console.log(`b: ${b}`)
 }
 function findr() {
+    rArr = [];
 //    console.log('TBD calculating fractions for resultant.');
 //    console.log(`r: ${r}`)
 }
 function findcp() {
+    cpArr = [];
     if (cp <= 15) {
         cpArr.push(`<sup>${cp}</sup>/<sub>${cp}</sub>`);
     } else {
-        cpArr.push('over fifteen');
+        cpArr.push(`over fifteen! . . . <sup>${cp}</sup>/<sub>${cp}</sub>`);
     }
-    console.log(`cp: ${cp}`);
 }
 
 
@@ -144,7 +136,6 @@ function setupGraph(canvas, ctx) {
     ctx.beginPath();    // create the path
     ctx.moveTo(0,y);    // set starting point position
 }
-
 function drawGraphs() {
 // common denominator
     setupGraph(canvascd, ctxcd);
@@ -203,7 +194,6 @@ function drawGraphs() {
     }
     endGraph(ctxcp);
 } // end drawGraphs();
-
 function endGraph(canvas, generator) {
     if (generator) {
         rArr.push(cw);
