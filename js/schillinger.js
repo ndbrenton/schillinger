@@ -1,7 +1,9 @@
-/* MODEL */
+/*
+ * ******* MODEL ********
+ */
 let a = 3;  // Major Generator
 let b = 2;  // Minor Generator
-let r = 'tbd';
+let r = [];  // resultant as array of integers
 let cp = (a * b);  // Common Product
 let cd = (1 / cp); // Common Denominator
 
@@ -9,6 +11,8 @@ let cdArr = [];  // console.log(cdArr);
 let aArr = [];
 let bArr = [];
 let rArr = [];
+let rSorted = [];
+let rArrFractions = [];  // resultant array for numbers (fractions) area
 let cpArr = [];
 
 let cw = 180; // Canvas width
@@ -17,30 +21,51 @@ let hi = ch * (1/4); // Upper limit for graph line
 let lo = ch * (3/4); // Lower limit for graph line
 let y = lo;
 
-const resultant = document.getElementById('select-r');
-const graphHeader = document.getElementById('gra-header');
 
+/* Set up the Number (fractions) area */
 const num_cd = document.querySelector('#num-cd'); // cd
-const num_a = document.querySelector('#num-a'); // a
-const num_b = document.querySelector('#num-b'); // b
-const num_r = document.querySelector("#num-r"); // r
+const num_a  = document.querySelector('#num-a'); // a
+const num_b  = document.querySelector('#num-b'); // b
+const num_r  = document.querySelector("#num-r"); // r
 const num_cp = document.querySelector('#num-cp'); // cp
 
-const canvascd = document.querySelector('#canvas-cd');
+/* Set up the Graphs area */
+const graphcd = document.getElementById('cd-graph');
+canvascd = document.createElement('canvas');
+canvascd.id = 'canvas-cd';
 const ctxcd = canvascd.getContext('2d')
-const canvasa =  document.querySelector('#canvas-a');
+graphcd.appendChild(canvascd);
+
+const grapha = document.getElementById('a-graph');
+canvasa = document.createElement('canvas');
+canvasa.id = 'canvas-a';
 const ctxa = canvasa.getContext('2d');
-const canvasb =  document.querySelector('#canvas-b');
+grapha.appendChild(canvasa);
+
+const graphb = document.getElementById('b-graph');
+canvasb = document.createElement('canvas');
+canvasb.id = 'canvas-b';
 const ctxb = canvasb.getContext('2d');
-const canvasr =  document.querySelector('#canvas-r');
+graphb.appendChild(canvasb);
+
+const graphr = document.getElementById('r-graph');
+canvasr = document.createElement('canvas');
+canvasr.id = 'canvas-r';
 const ctxr = canvasr.getContext('2d');
-const canvascp = document.querySelector('#canvas-cp');
-const ctxcp = canvascp.getContext('2d');
+graphr.appendChild(canvasr);
+
+const graphcp = document.getElementById('cp-graph');
+canvascp = document.createElement('canvas');
+canvascp.id = 'canvas-cp';
+const ctxcp = canvascp.getContext('2d')
+graphcp.appendChild(canvascp);
+
+
+const resultant = document.getElementById('select-r');
 
 resultant.addEventListener('change', function() {
     a = resultant.value.charAt(0)
     b = resultant.value.charAt(1)
-//    bArr = [];
     cp = (a * b);  // Common Product
     cd = (1 / cp); // Common Denominator
     if (cp > 15) {
@@ -51,32 +76,41 @@ resultant.addEventListener('change', function() {
     octopus();
 })
 
-/* OCTOPUS */
+/*
+ ******** OCTOPUS "Control" ********
+ */
 function octopus() {
+    findcd();
+    num_cd.innerHTML = cdArr.join('  +  ');
+    finda();
+    num_a.innerHTML = aArr.join('  +  ');
+    findb();
+    num_b.innerHTML = bArr.join('  +  ');
+    findcp();
+    num_cp.innerHTML = cpArr.join('  +  ');
+
+/* Graph first to find resultant */
+    drawGraphs();
+
+    num_r.innerHTML = rArrFractions.join('  +  ');
+
+/* Console Logs for feedback */
     console.clear();
     console.log(`${a} % ${b}`);
     console.log(`c.d. = ${cd}`)
     console.log(`  a. = ${a}`)
     console.log(`  b. = ${b}`)
+    console.log(`  r. = ${r}`)
     console.log(`c.p. = ${cp}`);
-
-    findcd();
-    num_cd.innerHTML = cdArr.join('  +  ');
-    finda(a,cp,aArr);
-    num_a.innerHTML = aArr.join('  +  ');
-    findb(b, cp, bArr);
-    num_b.innerHTML = bArr.join('  +  ');
-    findr();
-    num_r.innerText = 'TBD';
-    findcp();
-    num_cp.innerHTML = cpArr.join('  +  ');
-
-    drawGraphs();
 }
 octopus();
 
 
-/* VIEW */
+/*
+ ******** VIEW ********
+ */
+
+/* Number (fraction) related functions */
 function findcd() {
     cdArr = [];
     for (i = 1; i <= cp; i++) {
@@ -102,9 +136,6 @@ function findb() {
     }
 }
 function findr() {
-    rArr = [];
-//    console.log('TBD calculating fractions for resultant.');
-//    console.log(`r: ${r}`)
 }
 function findcp() {
     cpArr = [];
@@ -115,7 +146,7 @@ function findcp() {
     }
 }
 
-
+/* Graph-related Functions */
 function switchY() {  // inverts the value of y
     if (y === lo) {
         y = hi; // console.log(`y is lo, switching to: ${y}`);
@@ -129,15 +160,23 @@ function resetY() {  // sets y to lo
         y = lo; //  console.log('Y is now lo');
     }
 }
-
 function setupGraph(canvas, ctx) {
     canvas.width = cw;  // set canvas width
     canvas.height = ch; // set canvas height
     ctx.beginPath();    // create the path
     ctx.moveTo(0,y);    // set starting point position
 }
+function endGraph(canvas, generator) {
+    if (generator) {
+        rArr.push(cw);
+    }
+    switchY();
+    canvas.lineTo(cw,y);  // down
+    canvas.stroke();  // stroke path to render
+    resetY();
+}
 function drawGraphs() {
-// common denominator
+// c.d. (common denominator)
     setupGraph(canvascd, ctxcd);
     for (i = 0; i < cp; i++) {
         switchY();
@@ -147,7 +186,7 @@ function drawGraphs() {
         ctxcd.lineTo(x2,y);
     }
     endGraph(ctxcd);
-// a
+// a. (major generator)
     setupGraph(canvasa, ctxa);
     for (i = 0; (i * a) < cp; i++) {
         switchY();
@@ -155,10 +194,10 @@ function drawGraphs() {
         x2 = cw * (((i + 1) * a) / cp); // console.log(`t${i}: ${x1},${y} and ${x2},${y}`)
         ctxa.lineTo(x1,y);
         ctxa.lineTo(x2,y);
-        rArr.push(x1);
+        rArr.push(x1);  // add into resultant array for comparison ***
     }
     endGraph(ctxa, 'a');
-// b
+// b. (minor generator)
     setupGraph(canvasb, ctxb);
     for (i = 0; (i * b) < cp; i++) {
         switchY();
@@ -166,16 +205,16 @@ function drawGraphs() {
         x2 = cw * (((i + 1) * b) / cp); //  console.log(`t${i}+1: ${x1},${y} and ${x2},${y}`)
         ctxb.lineTo(x1,y);
         ctxb.lineTo(x2,y);
-        rArr.push(x1);
+        rArr.push(x1);  // add into resultant array for comparison ***
     }
     endGraph(ctxb, 'b');
-// resultant
+// r. (resultant)
     setupGraph(canvasr, ctxr);
-    var rUnique = rArr.filter(function(item, index){ // remove duplicates
-    	return rArr.indexOf(item) >= index;
-    }); // console.log(rUnique);
-    rSorted = rUnique.sort((a, b) => a - b); // console.log(rSorted);
-    for (i = 1; i < rSorted.length; i++) { // for loop to draw resultant
+    var rUnique = rArr.filter(function(x, index){ // removes duplicate pushes from above (a and b graphing)
+    	return rArr.indexOf(x) >= index;
+    });
+    rSorted = rUnique.sort((a, b) => a - b); // sorts array by index
+    for (i = 1; i < rSorted.length; i++) { // for loop to draw resultant, utilizing sorted array for x coordinates
         switchY();
         x1 = rSorted[i-1];
         x2 = rSorted[i];
@@ -183,7 +222,19 @@ function drawGraphs() {
         ctxr.lineTo(x2,y); // console.log(`${x1},${y} and ${x2},${y}`);
     }
     endGraph(ctxr);
-// common product
+/* *** *** magic part start *** *** */
+    rArr = [];
+    r = [];
+    rArrFractions = [];
+    for (i = 0; i < rSorted.length - 1; i++) { // obtains values for resultant in decimal form
+        xDiff = rSorted[i + 1] - rSorted[i]  // (x2 - x1)
+        rDecimal = xDiff / cw; // in decimal form // console.log(rDecimal);
+        rDecRounded = Math.round(rDecimal * cp);  // numerator for resultant fractions // console.log(`${rDecRounded} / ${cp}`);
+        rArrFractions.push(`<sup>${rDecRounded}</sup>/<sub>${cp}</sub>`); // pushes into resultant array for numbers section
+        r.push(rDecRounded); // pushes into resultant integer array for console loggins and eventually music notation***
+    }
+/* *** *** magic part end *** *** */
+// c.p. (common product)
     setupGraph(canvascp, ctxcp);
     for (i = 0; (i * cp) < cp; i++) {
         switchY();
@@ -194,12 +245,5 @@ function drawGraphs() {
     }
     endGraph(ctxcp);
 } // end drawGraphs();
-function endGraph(canvas, generator) {
-    if (generator) {
-        rArr.push(cw);
-    }
-    switchY();
-    canvas.lineTo(cw,y);  // down
-    canvas.stroke();  // stroke path to render
-    resetY();
-}
+
+/* Music notation functions to follow */

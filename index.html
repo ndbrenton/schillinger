@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0"
-    <title>Rhythm: Notation System</title>
+    <title>Select-A-Resultant</title>
     <link rel="stylesheet" href="./css/schillinger.css">
 </head>
 <body>
@@ -12,14 +12,14 @@
         <nav>
             <p>Resultant:
             <select id="select-r">
-                <option value="21">4 % 1</option>
-                <option value="31">5 % 1</option>
-                <option value="41">5 % 1</option>
+                <option value="21">2 % 1</option>
+                <option value="31">3 % 1</option>
+                <option value="41">4 % 1</option>
                 <option value="51">5 % 1</option>
                 <option value="61">6 % 1</option>
                 <option value="71">7 % 1</option>
-                <option value="81">7 % 1</option>
-                <option value="91">7 % 1</option>
+                <option value="81">8 % 1</option>
+                <option value="91">9 % 1</option>
                 <option value="32" selected>3 % 2</option>
                 <option value="43">4 % 3</option>
                 <option value="52">5 % 2</option>
@@ -40,8 +40,8 @@
                 <option value="97">9 % 7</option>
                 <option value="98">9 % 8</option>
             </select>
-        </p>
-    </nav>
+            </p>
+        </nav>
     </header>
     <article>
         <div id="fig6">
@@ -51,39 +51,34 @@
                 <div class="gra header"id="gra-header">Graphs</div>
                 <div class="mus header">Music</div>
             </div>
-
             <div class="row cd">
                 <div class="num" id="num-cd"></div>
                 <div class="key">c.d.</div>
-                <div class="gra"><canvas id="canvas-cd"></canvas></div>
+                <div class="gra" id="cd-graph"></div>
                 <div class="mus">TBD</div>
             </div>
-
             <div class="row a">
                 <div class="num" id="num-a"></div>
                 <div class="key">a.</div>
-                <div class="gra"><canvas id="canvas-a" ></canvas></div>
+                <div class="gra" id="a-graph"></div>
                 <div class="mus">TBD</div>
             </div>
-
             <div class="row b">
                 <div class="num" id="num-b"></div>
                 <div class="key">b.</div>
-                <div class="gra"><canvas id="canvas-b" ></canvas></div>
+                <div class="gra" id="b-graph"></div>
                 <div class="mus">TBD</div>
             </div>
-
             <div class="row r">
                 <div class="num" id="num-r"></div>
                 <div class="key">r.</div>
-                <div class="gra" ><canvas id="canvas-r" ></canvas></div>
+                <div class="gra" id="r-graph"></div>
                 <div class="mus">TBD</div>
             </div>
-
             <div class="row cp">
                 <div class="num" id="num-cp"></div>
                 <div class="key">c.p.</div>
-                <div class="gra"><canvas id="canvas-cp"></canvas></div>
+                <div class="gra" id="cp-graph"></div>
                 <div class="mus">TBD</div>
             </div>
         </div>

@@ -3,11 +3,11 @@
 ## Book 1: Rhythm
 
  - open index.html in a web browser
- - select a resultant from the drop-down list to see it in number and graph representations
+ - choose a resultant from the drop-down select-menu to see it in number and graph representations
  
  ### To Do
-   - calculate number-fractions for selected resultant
-   - implement musical notation, perhaps with VexFlow
+  - css stylings
+  - decide on a JS API for music notation
    
    
 
