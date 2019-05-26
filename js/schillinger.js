@@ -21,7 +21,6 @@ let hi = ch * (1/4); // Upper limit for graph line
 let lo = ch * (3/4); // Lower limit for graph line
 let y = lo;
 
-
 /* Set up the Number (fractions) area */
 const num_cd = document.querySelector('#num-cd'); // cd
 const num_a  = document.querySelector('#num-a'); // a
@@ -61,38 +60,31 @@ const ctxcp = canvascp.getContext('2d')
 graphcp.appendChild(canvascp);
 
 
-const resultant = document.getElementById('select-r');
-
+const resultant = document.getElementById('select-r'); // the resultant's select menu
 resultant.addEventListener('change', function() {
-    a = resultant.value.charAt(0)
-    b = resultant.value.charAt(1)
+    a = resultant.value.charAt(0)  // the first character of value attribute
+    b = resultant.value.charAt(1)  // the second character of value attribute
     cp = (a * b);  // Common Product
     cd = (1 / cp); // Common Denominator
-    if (cp > 15) {
-        cw = 180;
-    } else {
-        cw = 180;
-    }
+    cw = 180;
+
     octopus();
 })
+
 
 /*
  ******** OCTOPUS "Control" ********
  */
 function octopus() {
+
     findcd();
-    num_cd.innerHTML = cdArr.join('  +  ');
-    finda();
-    num_a.innerHTML = aArr.join('  +  ');
-    findb();
-    num_b.innerHTML = bArr.join('  +  ');
+    findGenerator(a, aArr, num_a);
+    findGenerator(b, bArr, num_b);
     findcp();
-    num_cp.innerHTML = cpArr.join('  +  ');
 
-/* Graph first to find resultant */
+/* Graph first then find resultant */
     drawGraphs();
-
-    num_r.innerHTML = rArrFractions.join('  +  ');
+    findr();
 
 /* Console Logs for feedback */
     console.clear();
@@ -112,31 +104,30 @@ octopus();
 
 /* Number (fraction) related functions */
 function findcd() {
-    cdArr = [];
+    cdArr = [];  // clear the array
     for (i = 1; i <= cp; i++) {
         cdArr.push(`<sup>1</sup>/<sub>${cp}</sub>`);
     }
+    num_cd.innerHTML = cdArr.join('  +  '); // add fractions to html
 }
-function finda() {  // a, cp, aArr
-    aArr = [];
-    if (a == cp) {  // if a == common product, do only once
-        aArr.push(`<sup>${a}</sup>/<sub>${cp}</sub>`);  // console.log(`${b} a's: iteration: ${b}`);
+
+function findGenerator(generator, genArray, numbersForGenerator) {
+    genArray = []; // clear the array
+    if (generator == cp) {  // if a == common product, do only once
+        genArray.push(`<sup>${generator}</sup>/<sub>${cp}</sub>`);  // add fraction to generator's array
     } else {
-        for (i = 0; i < 0.999999;) {  // add a to itself for another pass
-            i = i + (a / cp); // console.log(`${b} a's: iteration: ${i}`)
-            aArr.push(`<sup>${a}</sup>/<sub>${cp}</sub>`);
+        for (i = 0; i < 0.999999;) {  // add generator to itself for another pass
+            i = i + (generator / cp); // add fraction to generator's array
+            genArray.push(`<sup>${generator}</sup>/<sub>${cp}</sub>`);
         }
     }
+    numbersForGenerator.innerHTML = genArray.join('  +  ');
 }
-function findb() {
-    bArr = [];
-    for (i = 0; i < 0.999999;) {
-        i = i + (b / cp); // console.log(`${a} b's: iteration: ${i}`)
-        bArr.push(`<sup>${b}</sup>/<sub>${cp}</sub>`);
-    }
-}
+
 function findr() {
+    num_r.innerHTML = rArrFractions.join('  +  ');
 }
+
 function findcp() {
     cpArr = [];
     if (cp <= 15) {
@@ -144,6 +135,7 @@ function findcp() {
     } else {
         cpArr.push(`over fifteen! . . . <sup>${cp}</sup>/<sub>${cp}</sub>`);
     }
+    num_cp.innerHTML = cpArr.join('  +  ');
 }
 
 /* Graph-related Functions */
@@ -154,18 +146,21 @@ function switchY() {  // inverts the value of y
         y = lo; // console.log(`y is hi, switching to: ${y}`);
     }
 }
+
 function resetY() {  // sets y to lo
     if (y === lo) { //  console.log('Y is already lo');
     } else {
         y = lo; //  console.log('Y is now lo');
     }
 }
+
 function setupGraph(canvas, ctx) {
     canvas.width = cw;  // set canvas width
     canvas.height = ch; // set canvas height
     ctx.beginPath();    // create the path
     ctx.moveTo(0,y);    // set starting point position
 }
+
 function endGraph(canvas, generator) {
     if (generator) {
         rArr.push(cw);
@@ -175,6 +170,7 @@ function endGraph(canvas, generator) {
     canvas.stroke();  // stroke path to render
     resetY();
 }
+
 function drawGraphs() {
 // c.d. (common denominator)
     setupGraph(canvascd, ctxcd);
