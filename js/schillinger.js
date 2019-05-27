@@ -21,6 +21,13 @@ let hi = ch * (1/4); // Upper limit for graph line
 let lo = ch * (3/4); // Lower limit for graph line
 let y = lo;
 
+let quarter = 4;
+let eighth = 8;
+let oneBeat = eighth;
+let bars = 'T';
+let divisions = 't';
+let timeSignature = '';
+
 /* Set up the Number (fractions) area */
 const num_cd = document.querySelector('#num-cd'); // cd
 const num_a  = document.querySelector('#num-a'); // a
@@ -59,6 +66,10 @@ canvascp.id = 'canvas-cp';
 const ctxcp = canvascp.getContext('2d')
 graphcp.appendChild(canvascp);
 
+const groupingBy_cp = document.getElementById('grouping-cp');
+const groupingBy_a = document.getElementById('grouping-a');
+const groupingBy_b = document.getElementById('grouping-b');
+
 
 const resultant = document.getElementById('select-r'); // the resultant's select menu
 resultant.addEventListener('change', function() {
@@ -94,6 +105,15 @@ function octopus() {
     console.log(`  b. = ${b}`)
     console.log(`  r. = ${r}`)
     console.log(`c.p. = ${cp}`);
+
+cpGrouping();
+aGrouping();
+bGrouping();
+
+//    console.log(`${timeSignature}, ${bars} bars with ${divisions} units per measure.`);
+//    console.log(`${timeSignature}, ${bars} bars with ${divisions} units per measure.`);
+//    console.log(`${timeSignature}, ${bars}T with ${divisions}t per measure.`);
+
 }
 octopus();
 
@@ -130,10 +150,10 @@ function findr() {
 
 function findcp() {
     cpArr = [];
-    if (cp <= 15) {
+    if (cp <= 18) {
         cpArr.push(`<sup>${cp}</sup>/<sub>${cp}</sub>`);
     } else {
-        cpArr.push(`over fifteen! . . . <sup>${cp}</sup>/<sub>${cp}</sub>`);
+        cpArr.push(`over eighteen! . . . <sup>${cp}</sup>/<sub>${cp}</sub>`);
     }
     num_cp.innerHTML = cpArr.join('  +  ');
 }
@@ -243,3 +263,54 @@ function drawGraphs() {
 } // end drawGraphs();
 
 /* Music notation functions to follow */
+
+
+/* Grouping functions */
+function cpGrouping() {
+    if (b != 1) {
+        oneBeat = eighth;
+        bars = (a*b)/(a*b);
+        divisions = a*b;
+        if (a <= 4 && cp != 12 && cp != 6) {
+            oneBeat = quarter;
+        }
+        timeSignature = `${divisions}/${oneBeat}`;
+        if (a*b <= 18) {
+            groupingBy_cp.innerText = `${bars} bar of ${timeSignature}, with ${divisions} units per measure.`;
+        } else {
+    //        console.log(`---  ${cp} greater than 18.`);
+            groupingBy_cp.innerText = `N/A: c.p. over 18.`;
+        }
+    } else {
+            groupingBy_cp.innerText = `N/A`;
+    }
+}
+
+function aGrouping() {
+    oneBeat = eighth;
+    bars = (a*b)/(a);
+    divisions = a;
+    if (b <= 4 && a != 7) {
+        oneBeat = 4;
+    }
+    if (a >= 8 ) {
+        oneBeat = 8;
+    }
+    timeSignature = `${divisions}/${oneBeat}`;
+    groupingBy_a.innerText = `${bars} bars of ${timeSignature}, with ${divisions} units per measure.`;
+}
+
+function bGrouping() {
+    if (b != 1) {
+        oneBeat = eighth;
+        bars = (a*b)/(b);
+        divisions = b;
+        if (b <= 5) { // 7%6 can also be 3/4
+            oneBeat = 4;
+        }
+        timeSignature = `${divisions}/${oneBeat}`;
+        groupingBy_b.innerText = `${bars} bars of ${timeSignature}, with ${divisions} units per measure.`;
+    } else {
+        groupingBy_b.innerText = `N/A`;
+    }
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Select-A-Resultant</title>
     <link rel="stylesheet" href="./css/schillinger.css">
 </head>
@@ -10,8 +10,9 @@
     <header>
         <h1>System of Musical Composition, Book 1: Rhythm</h1>
         <nav>
-            <p>Resultant:
+            <p>19 cases of binary synchronization ("necessary scores"):
             <select id="select-r">
+<!--
                 <option value="21">2 % 1</option>
                 <option value="31">3 % 1</option>
                 <option value="41">4 % 1</option>
@@ -20,6 +21,7 @@
                 <option value="71">7 % 1</option>
                 <option value="81">8 % 1</option>
                 <option value="91">9 % 1</option>
+-->
                 <option value="32" selected>3 % 2</option>
                 <option value="43">4 % 3</option>
                 <option value="52">5 % 2</option>
@@ -81,6 +83,11 @@
                 <div class="gra" id="cp-graph"></div>
                 <div class="mus">TBD</div>
             </div>
+        </div>
+        <div>
+            <p>Grouping by product: <span id="grouping-cp"></span></p>
+            <p>Grouping by major generator: <span id="grouping-a"></span></p>
+            <p>Grouping by minor generator: <span id="grouping-b"></span></p>
         </div>
     </article>
 <script type="text/javascript" src="./js/schillinger.js"></script>
